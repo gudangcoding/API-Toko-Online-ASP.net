@@ -1,6 +1,6 @@
 # API Toko Online
 
-API toko online yang dibangun dengan ASP.NET Core dan Entity Framework Core. API ini menyediakan endpoint untuk mengelola User, Kategori, Produk, Order, OrderItem, dan Riwayat aktivitas.
+API toko online yang dibangun dengan ASP.NET Core dan Entity Framework Core. API ini menyediakan endpoint untuk mengelola User, Kategori, Produk, Order, OrderItem, dan Riwayat aktivitas. Dibuat untuk pembelajaran pembuatan Backend untuk kursus ASP.net dengan C# di Lembaga Kursus LKP Naura
 
 ## Fitur Utama
 
