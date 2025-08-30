@@ -1,0 +1,174 @@
+### Test API Toko Online dengan JWT Authentication
+
+# 1. Register User Baru
+POST {{baseUrl}}/api/users/register
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "password": "password123",
+  "phone": "081234567890",
+  "address": "Jl. Test No. 123"
+}
+
+###
+
+# 2. Login dan Dapatkan JWT Token
+POST {{baseUrl}}/api/users/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+###
+
+# 3. Get Current User (dengan token)
+GET {{baseUrl}}/api/users/me
+Authorization: Bearer {{authToken}}
+
+###
+
+# 4. Get All Users (tanpa token - public)
+GET {{baseUrl}}/api/users
+
+###
+
+# 5. Get User by ID (tanpa token - public)
+GET {{baseUrl}}/api/users/1
+
+###
+
+# 6. Create Category (tanpa token - public)
+POST {{baseUrl}}/api/categories
+Content-Type: application/json
+
+{
+  "name": "Electronics",
+  "description": "Electronic devices and gadgets"
+}
+
+###
+
+# 7. Get All Categories (tanpa token - public)
+GET {{baseUrl}}/api/categories
+
+###
+
+# 8. Create Product (tanpa token - public)
+POST {{baseUrl}}/api/products
+Content-Type: application/json
+
+{
+  "name": "Smartphone XYZ",
+  "description": "Latest smartphone with advanced features",
+  "price": 2500000,
+  "stock": 50,
+  "imageUrl": "https://example.com/smartphone.jpg",
+  "categoryId": 1
+}
+
+###
+
+# 9. Get All Products (tanpa token - public)
+GET {{baseUrl}}/api/products
+
+###
+
+# 10. Get Products by Category (tanpa token - public)
+GET {{baseUrl}}/api/products/category/1
+
+###
+
+# 11. Create Order (dengan token - protected)
+POST {{baseUrl}}/api/orders
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "shippingAddress": "Jl. Pengiriman No. 456",
+  "phone": "081234567890",
+  "notes": "Tolong dibungkus rapi dan kirim secepatnya",
+  "orderItems": [
+    {
+      "productId": 1,
+      "quantity": 2
+    }
+  ]
+}
+
+###
+
+# 12. Get My Orders (dengan token - protected)
+GET {{baseUrl}}/api/orders/my-orders
+Authorization: Bearer {{authToken}}
+
+###
+
+# 13. Get All Orders (dengan token - protected)
+GET {{baseUrl}}/api/orders
+Authorization: Bearer {{authToken}}
+
+###
+
+# 14. Get Order by ID (dengan token - protected)
+GET {{baseUrl}}/api/orders/1
+Authorization: Bearer {{authToken}}
+
+###
+
+# 15. Update Order Status (dengan token - protected)
+PUT {{baseUrl}}/api/orders/1/status
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "status": 2,
+  "notes": "Order confirmed and will be processed soon"
+}
+
+###
+
+# 16. Cancel Order (dengan token - protected)
+DELETE {{baseUrl}}/api/orders/1
+Authorization: Bearer {{authToken}}
+
+###
+
+# 17. Create Riwayat (dengan token - protected)
+POST {{baseUrl}}/api/riwayats
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "activityType": 1,
+  "description": "User logged in",
+  "details": "Successful login from web application",
+  "ipAddress": "192.168.1.1",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+}
+
+###
+
+# 18. Get My Riwayat (dengan token - protected)
+GET {{baseUrl}}/api/riwayats/my-activity
+Authorization: Bearer {{authToken}}
+
+###
+
+# 19. Get All Riwayat (dengan token - protected)
+GET {{baseUrl}}/api/riwayats
+Authorization: Bearer {{authToken}}
+
+###
+
+# 20. Get Activity Types (tanpa token - public)
+GET {{baseUrl}}/api/riwayats/activity-types
+
+###
+
+# Variables untuk testing
+@baseUrl = http://localhost:5158
+@authToken = YOUR_JWT_TOKEN_HERE

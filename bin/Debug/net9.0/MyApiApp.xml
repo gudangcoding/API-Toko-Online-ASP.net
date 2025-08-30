@@ -1,0 +1,311 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MyApiApp</name>
+    </assembly>
+    <members>
+        <member name="T:MyApiApp.Controllers.CategoriesController">
+            <summary>
+            Controller untuk mengelola operasi Category (kategori produk)
+            </summary>
+        </member>
+        <member name="M:MyApiApp.Controllers.CategoriesController.GetCategories">
+            <summary>
+            Mendapatkan semua kategori yang aktif
+            </summary>
+            <returns>Daftar semua kategori aktif</returns>
+            <response code="200">Berhasil mendapatkan daftar kategori</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.CategoriesController.GetCategory(System.Int32)">
+            <summary>
+            Mendapatkan kategori berdasarkan ID beserta produk-produknya
+            </summary>
+            <param name="id">ID kategori</param>
+            <returns>Data kategori beserta produk-produknya</returns>
+            <response code="200">Berhasil mendapatkan data kategori</response>
+            <response code="404">Kategori tidak ditemukan</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.CategoriesController.CreateCategory(MyApiApp.Models.Category)">
+            <summary>
+            Membuat kategori baru
+            </summary>
+            <param name="category">Data kategori yang akan dibuat</param>
+            <returns>Data kategori yang berhasil dibuat</returns>
+            <response code="201">Kategori berhasil dibuat</response>
+            <response code="400">Data input tidak valid</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.CategoriesController.UpdateCategory(System.Int32,MyApiApp.Models.Category)">
+            <summary>
+            Update data kategori
+            </summary>
+            <param name="id">ID kategori</param>
+            <param name="category">Data yang akan diupdate</param>
+            <returns>Tidak ada konten</returns>
+            <response code="204">Berhasil mengupdate data kategori</response>
+            <response code="400">Data input tidak valid</response>
+            <response code="404">Kategori tidak ditemukan</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.CategoriesController.DeleteCategory(System.Int32)">
+            <summary>
+            Menghapus kategori (soft delete)
+            </summary>
+            <param name="id">ID kategori</param>
+            <returns>Tidak ada konten</returns>
+            <response code="204">Kategori berhasil dihapus</response>
+            <response code="404">Kategori tidak ditemukan</response>
+        </member>
+        <member name="T:MyApiApp.Controllers.OrdersController">
+            <summary>
+            Controller untuk mengelola operasi Order (pesanan)
+            </summary>
+        </member>
+        <member name="M:MyApiApp.Controllers.OrdersController.GetOrders">
+            <summary>
+            Mendapatkan semua order
+            </summary>
+            <returns>Daftar semua order beserta detail user dan itemnya</returns>
+            <response code="200">Berhasil mendapatkan daftar order</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.OrdersController.GetOrder(System.Int32)">
+            <summary>
+            Mendapatkan order berdasarkan ID
+            </summary>
+            <param name="id">ID order</param>
+            <returns>Data order beserta detail user dan itemnya</returns>
+            <response code="200">Berhasil mendapatkan data order</response>
+            <response code="404">Order tidak ditemukan</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.OrdersController.GetMyOrders">
+            <summary>
+            Mendapatkan order berdasarkan user yang sedang login
+            </summary>
+            <returns>Daftar order milik user yang sedang login</returns>
+            <response code="200">Berhasil mendapatkan daftar order</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.OrdersController.GetOrdersByUser(System.Int32)">
+            <summary>
+            Mendapatkan order berdasarkan user ID (admin only)
+            </summary>
+            <param name="userId">ID user</param>
+            <returns>Daftar order milik user tertentu</returns>
+            <response code="200">Berhasil mendapatkan daftar order</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.OrdersController.CreateOrder(MyApiApp.DTOs.CreateOrderDto)">
+            <summary>
+            Membuat order baru
+            </summary>
+            <param name="createOrderDto">Data order yang akan dibuat</param>
+            <returns>Data order yang berhasil dibuat</returns>
+            <response code="201">Order berhasil dibuat</response>
+            <response code="400">Data input tidak valid atau stok tidak mencukupi</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.OrdersController.UpdateOrderStatus(System.Int32,MyApiApp.DTOs.UpdateOrderStatusDto)">
+            <summary>
+            Update status order
+            </summary>
+            <param name="id">ID order</param>
+            <param name="updateStatusDto">Data status yang akan diupdate</param>
+            <returns>Tidak ada konten</returns>
+            <response code="204">Berhasil mengupdate status order</response>
+            <response code="404">Order tidak ditemukan</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.OrdersController.CancelOrder(System.Int32)">
+            <summary>
+            Membatalkan order
+            </summary>
+            <param name="id">ID order</param>
+            <returns>Tidak ada konten</returns>
+            <response code="204">Order berhasil dibatalkan</response>
+            <response code="400">Order tidak dapat dibatalkan</response>
+            <response code="404">Order tidak ditemukan</response>
+        </member>
+        <member name="T:MyApiApp.Controllers.ProductsController">
+            <summary>
+            Controller untuk mengelola operasi Product (produk)
+            </summary>
+        </member>
+        <member name="M:MyApiApp.Controllers.ProductsController.GetProducts">
+            <summary>
+            Mendapatkan semua produk yang aktif
+            </summary>
+            <returns>Daftar semua produk aktif beserta kategorinya</returns>
+            <response code="200">Berhasil mendapatkan daftar produk</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.ProductsController.GetProduct(System.Int32)">
+            <summary>
+            Mendapatkan produk berdasarkan ID
+            </summary>
+            <param name="id">ID produk</param>
+            <returns>Data produk beserta kategorinya</returns>
+            <response code="200">Berhasil mendapatkan data produk</response>
+            <response code="404">Produk tidak ditemukan</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.ProductsController.GetProductsByCategory(System.Int32)">
+            <summary>
+            Mendapatkan produk berdasarkan kategori
+            </summary>
+            <param name="categoryId">ID kategori</param>
+            <returns>Daftar produk dalam kategori tertentu</returns>
+            <response code="200">Berhasil mendapatkan daftar produk</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.ProductsController.CreateProduct(MyApiApp.Models.Product)">
+            <summary>
+            Membuat produk baru
+            </summary>
+            <param name="product">Data produk yang akan dibuat</param>
+            <returns>Data produk yang berhasil dibuat</returns>
+            <response code="201">Produk berhasil dibuat</response>
+            <response code="400">Data input tidak valid atau kategori tidak ditemukan</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.ProductsController.UpdateProduct(System.Int32,MyApiApp.Models.Product)">
+            <summary>
+            Update data produk
+            </summary>
+            <param name="id">ID produk</param>
+            <param name="product">Data yang akan diupdate</param>
+            <returns>Tidak ada konten</returns>
+            <response code="204">Berhasil mengupdate data produk</response>
+            <response code="400">Data input tidak valid</response>
+            <response code="404">Produk tidak ditemukan</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.ProductsController.DeleteProduct(System.Int32)">
+            <summary>
+            Menghapus produk (soft delete)
+            </summary>
+            <param name="id">ID produk</param>
+            <returns>Tidak ada konten</returns>
+            <response code="204">Produk berhasil dihapus</response>
+            <response code="404">Produk tidak ditemukan</response>
+        </member>
+        <member name="T:MyApiApp.Controllers.RiwayatsController">
+            <summary>
+            Controller untuk mengelola operasi Riwayat (aktivitas user)
+            </summary>
+        </member>
+        <member name="M:MyApiApp.Controllers.RiwayatsController.GetRiwayats">
+            <summary>
+            Mendapatkan semua riwayat aktivitas
+            </summary>
+            <returns>Daftar semua riwayat aktivitas beserta data user</returns>
+            <response code="200">Berhasil mendapatkan daftar riwayat</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.RiwayatsController.GetRiwayatsByUser(System.Int32)">
+            <summary>
+            Mendapatkan riwayat aktivitas berdasarkan user
+            </summary>
+            <param name="userId">ID user</param>
+            <returns>Daftar riwayat aktivitas user tertentu</returns>
+            <response code="200">Berhasil mendapatkan daftar riwayat</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.RiwayatsController.GetRiwayat(System.Int32)">
+            <summary>
+            Mendapatkan riwayat berdasarkan ID
+            </summary>
+            <param name="id">ID riwayat</param>
+            <returns>Data riwayat beserta data user</returns>
+            <response code="200">Berhasil mendapatkan data riwayat</response>
+            <response code="404">Riwayat tidak ditemukan</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.RiwayatsController.CreateRiwayat(MyApiApp.Models.Riwayat)">
+            <summary>
+            Membuat riwayat aktivitas baru
+            </summary>
+            <param name="riwayat">Data riwayat yang akan dibuat</param>
+            <returns>Data riwayat yang berhasil dibuat</returns>
+            <response code="201">Riwayat berhasil dibuat</response>
+            <response code="400">Data input tidak valid atau user tidak ditemukan</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.RiwayatsController.GetActivityTypes">
+            <summary>
+            Mendapatkan daftar tipe aktivitas yang tersedia
+            </summary>
+            <returns>Daftar tipe aktivitas</returns>
+            <response code="200">Berhasil mendapatkan daftar tipe aktivitas</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.RiwayatsController.GetRiwayatsByUserAndActivity(System.Int32,MyApiApp.Models.ActivityType)">
+            <summary>
+            Mendapatkan riwayat berdasarkan user dan tipe aktivitas
+            </summary>
+            <param name="userId">ID user</param>
+            <param name="activityType">Tipe aktivitas</param>
+            <returns>Daftar riwayat berdasarkan filter</returns>
+            <response code="200">Berhasil mendapatkan daftar riwayat</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.RiwayatsController.GetRiwayatsByUserAndDateRange(System.Int32,System.DateTime,System.DateTime)">
+            <summary>
+            Mendapatkan riwayat berdasarkan user dan rentang tanggal
+            </summary>
+            <param name="userId">ID user</param>
+            <param name="startDate">Tanggal mulai</param>
+            <param name="endDate">Tanggal akhir</param>
+            <returns>Daftar riwayat dalam rentang tanggal tertentu</returns>
+            <response code="200">Berhasil mendapatkan daftar riwayat</response>
+        </member>
+        <member name="T:MyApiApp.Controllers.UsersController">
+            <summary>
+            Controller untuk mengelola operasi User (pengguna)
+            </summary>
+        </member>
+        <member name="M:MyApiApp.Controllers.UsersController.Register(MyApiApp.DTOs.CreateUserDto)">
+            <summary>
+            Registrasi user baru
+            </summary>
+            <param name="createUserDto">Data user yang akan didaftarkan</param>
+            <returns>Data user yang berhasil dibuat</returns>
+            <response code="201">User berhasil dibuat</response>
+            <response code="400">Data input tidak valid atau email sudah terdaftar</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.UsersController.Login(MyApiApp.DTOs.LoginDto)">
+            <summary>
+            Login user dan mendapatkan JWT token
+            </summary>
+            <param name="loginDto">Kredensial login</param>
+            <returns>JWT token dan data user</returns>
+            <response code="200">Login berhasil</response>
+            <response code="401">Email atau password salah</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.UsersController.GetCurrentUser">
+            <summary>
+            Validasi JWT token
+            </summary>
+            <returns>Informasi user dari token</returns>
+            <response code="200">Token valid</response>
+            <response code="401">Token tidak valid</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.UsersController.GetUsers">
+            <summary>
+            Mendapatkan semua user yang aktif
+            </summary>
+            <returns>Daftar semua user aktif</returns>
+            <response code="200">Berhasil mendapatkan daftar user</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.UsersController.GetUser(System.Int32)">
+            <summary>
+            Mendapatkan user berdasarkan ID
+            </summary>
+            <param name="id">ID user</param>
+            <returns>Data user</returns>
+            <response code="200">Berhasil mendapatkan data user</response>
+            <response code="404">User tidak ditemukan</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.UsersController.UpdateUser(System.Int32,MyApiApp.DTOs.UpdateUserDto)">
+            <summary>
+            Update data user
+            </summary>
+            <param name="id">ID user</param>
+            <param name="updateUserDto">Data yang akan diupdate</param>
+            <returns>Data user yang telah diupdate</returns>
+            <response code="200">Berhasil mengupdate data user</response>
+            <response code="404">User tidak ditemukan</response>
+        </member>
+        <member name="M:MyApiApp.Controllers.UsersController.DeleteUser(System.Int32)">
+            <summary>
+            Menghapus user (soft delete)
+            </summary>
+            <param name="id">ID user</param>
+            <returns>Tidak ada konten</returns>
+            <response code="204">User berhasil dihapus</response>
+            <response code="404">User tidak ditemukan</response>
+        </member>
+    </members>
+</doc>
