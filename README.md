@@ -1,6 +1,6 @@
 # API Toko Online - ASP.NET Core dengan JWT Authentication
 
-API toko online yang dibangun dengan ASP.NET Core dan Entity Framework Core. API ini menyediakan endpoint untuk mengelola User, Kategori, Produk, Order, OrderItem, dan Riwayat aktivitas dengan sistem autentikasi JWT yang aman.
+API toko online yang dibangun dengan ASP.NET Core dan Entity Framework Core. API ini menyediakan endpoint untuk mengelola User, Kategori, Produk, Order, OrderItem, dan Riwayat aktivitas dengan sistem autentikasi JWT yang aman. Proyek ini dibuat untuk tujuan pembelajaran di kursus ASP.NET membuat backend dengan c# di lembaga kursus LKP Naura
 
 ## 🚀 Fitur Utama
 
