@@ -1,243 +1,201 @@
-# API Toko Online
+# API Toko Online - ASP.NET Core dengan JWT Authentication
 
-API toko online yang dibangun dengan ASP.NET Core dan Entity Framework Core. API ini menyediakan endpoint untuk mengelola User, Kategori, Produk, Order, OrderItem, dan Riwayat aktivitas. Dibuat untuk pembelajaran pembuatan Backend untuk kursus ASP.net dengan C# di Lembaga Kursus LKP Naura
+API toko online yang dibangun dengan ASP.NET Core dan Entity Framework Core. API ini menyediakan endpoint untuk mengelola User, Kategori, Produk, Order, OrderItem, dan Riwayat aktivitas dengan sistem autentikasi JWT yang aman.
 
-## Fitur Utama
+## 🚀 Fitur Utama
 
-- **User Management**: Registrasi, login, dan manajemen profil user
-- **Category Management**: CRUD untuk kategori produk
-- **Product Management**: CRUD untuk produk dengan stok management
-- **Order Management**: Pembuatan order, tracking status, dan pembatalan
-- **Order Items**: Detail item dalam setiap order
-- **Activity History**: Pencatatan riwayat aktivitas user
+- **User Management**: Registrasi, login, dan manajemen user dengan JWT authentication
+- **Category Management**: CRUD operasi untuk kategori produk
+- **Product Management**: CRUD operasi untuk produk dengan manajemen stok
+- **Order Management**: Pembuatan order, tracking status, dan manajemen stok otomatis
+- **Activity History**: Pencatatan dan tracking aktivitas user
+- **JWT Authentication**: Sistem autentikasi yang aman dengan token
+- **Swagger Documentation**: Dokumentasi API yang lengkap dan interaktif
+- **Soft Delete**: Penghapusan data yang aman tanpa kehilangan data
 
-## Teknologi yang Digunakan
+## 🛠️ Teknologi yang Digunakan
 
-- ASP.NET Core 9.0
-- Entity Framework Core
-- SQL Server (LocalDB)
-- C# 12
+- **.NET 9.0** - Framework terbaru untuk pengembangan web
+- **ASP.NET Core** - Framework untuk building web APIs
+- **Entity Framework Core** - ORM untuk database operations
+- **SQL Server LocalDB** - Database lokal untuk development
+- **JWT (JSON Web Token)** - Sistem autentikasi stateless
+- **Swagger/OpenAPI** - Dokumentasi dan testing API
+- **C#** - Bahasa pemrograman utama
 
-## Struktur Database
+## 📋 Prerequisites
 
-### Entities
+Sebelum memulai, pastikan Anda memiliki:
 
-1. **User**
-   - Id, Name, Email, Password, Phone, Address
-   - CreatedAt, UpdatedAt, IsActive
+1. **Visual Studio 2022** atau **Visual Studio Code** dengan C# extension
+2. **.NET 9.0 SDK** - Download dari [dotnet.microsoft.com](https://dotnet.microsoft.com/download)
+3. **SQL Server LocalDB** (biasanya sudah terinstall dengan Visual Studio)
+4. **Git** (opsional, untuk version control)
 
-2. **Category**
-   - Id, Name, Description
-   - CreatedAt, UpdatedAt, IsActive
+## 🏗️ Langkah-langkah Pembangunan
 
-3. **Product**
-   - Id, Name, Description, Price, Stock, ImageUrl
-   - CategoryId (Foreign Key)
-   - CreatedAt, UpdatedAt, IsActive
+### Langkah 1: Membuat Proyek Baru
 
-4. **Order**
-   - Id, OrderNumber, UserId, ShippingAddress, Phone
-   - TotalAmount, Status, Notes
-   - OrderDate, ShippedDate, DeliveredDate
-   - CreatedAt, UpdatedAt
+```bash
+# Buat direktori baru
+mkdir MyApiApp
+cd MyApiApp
 
-5. **OrderItem**
-   - Id, OrderId, ProductId, Quantity
-   - UnitPrice, TotalPrice, CreatedAt
+# Buat proyek ASP.NET Core Web API
+dotnet new webapi
 
-6. **Riwayat**
-   - Id, UserId, ActivityType, Description, Details
-   - ActivityDate, IpAddress, UserAgent
-
-## Setup dan Instalasi
-
-### Prerequisites
-
-- .NET 9.0 SDK
-- SQL Server LocalDB (atau SQL Server Express)
-
-### Langkah Instalasi
-
-1. Clone repository ini
-2. Navigasi ke direktori proyek
-3. Restore dependencies:
-   ```bash
-   dotnet restore
-   ```
-4. Update connection string di `appsettings.json` jika diperlukan
-5. Jalankan aplikasi:
-   ```bash
-   dotnet run
-   ```
-
-Database akan otomatis dibuat saat aplikasi pertama kali dijalankan.
-
-## API Endpoints
-
-### Users
-
-- `POST /api/users/register` - Registrasi user baru
-- `POST /api/users/login` - Login user
-- `GET /api/users` - Mendapatkan semua user
-- `GET /api/users/{id}` - Mendapatkan user by ID
-- `PUT /api/users/{id}` - Update user
-- `DELETE /api/users/{id}` - Delete user (soft delete)
-
-### Categories
-
-- `GET /api/categories` - Mendapatkan semua kategori
-- `GET /api/categories/{id}` - Mendapatkan kategori by ID
-- `POST /api/categories` - Membuat kategori baru
-- `PUT /api/categories/{id}` - Update kategori
-- `DELETE /api/categories/{id}` - Delete kategori (soft delete)
-
-### Products
-
-- `GET /api/products` - Mendapatkan semua produk
-- `GET /api/products/{id}` - Mendapatkan produk by ID
-- `GET /api/products/category/{categoryId}` - Mendapatkan produk by kategori
-- `POST /api/products` - Membuat produk baru
-- `PUT /api/products/{id}` - Update produk
-- `DELETE /api/products/{id}` - Delete produk (soft delete)
-
-### Orders
-
-- `GET /api/orders` - Mendapatkan semua order
-- `GET /api/orders/{id}` - Mendapatkan order by ID
-- `GET /api/orders/user/{userId}` - Mendapatkan order by user
-- `POST /api/orders` - Membuat order baru
-- `PUT /api/orders/{id}/status` - Update status order
-- `DELETE /api/orders/{id}` - Cancel order
-
-### Riwayats
-
-- `GET /api/riwayats` - Mendapatkan semua riwayat
-- `GET /api/riwayats/{id}` - Mendapatkan riwayat by ID
-- `GET /api/riwayats/user/{userId}` - Mendapatkan riwayat by user
-- `GET /api/riwayats/activity-types` - Mendapatkan tipe aktivitas
-- `GET /api/riwayats/user/{userId}/activity/{activityType}` - Filter riwayat by aktivitas
-- `GET /api/riwayats/user/{userId}/date-range` - Filter riwayat by rentang tanggal
-- `POST /api/riwayats` - Membuat riwayat baru
-
-## Contoh Request/Response
-
-### Registrasi User
-
-**Request:**
-```json
-POST /api/users/register
-{
-  "name": "John Doe",
-  "email": "john@example.com",
-  "password": "password123",
-  "phone": "081234567890",
-  "address": "Jl. Contoh No. 123"
-}
+# Restore dependencies
+dotnet restore
 ```
 
-**Response:**
-```json
-{
-  "id": 1,
-  "name": "John Doe",
-  "email": "john@example.com",
-  "phone": "081234567890",
-  "address": "Jl. Contoh No. 123",
-  "createdAt": "2024-01-01T00:00:00Z",
-  "updatedAt": "2024-01-01T00:00:00Z",
-  "isActive": true
-}
+### Langkah 2: Menambahkan Dependencies
+
+Edit file `MyApiApp.csproj` dan tambahkan package berikut:
+
+```xml
+<ItemGroup>
+  <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5" />
+  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
+  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.5" />
+  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.5" />
+  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.5" />
+  <PackageReference Include="Swashbuckle.AspNetCore" Version="7.0.0" />
+  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.5" />
+  <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.3.0" />
+</ItemGroup>
 ```
 
-### Membuat Order
+### Langkah 3: Membuat Model Entities
 
-**Request:**
-```json
-POST /api/orders
-{
-  "shippingAddress": "Jl. Pengiriman No. 456",
-  "phone": "081234567890",
-  "notes": "Tolong dibungkus rapi",
-  "orderItems": [
-    {
-      "productId": 1,
-      "quantity": 2
-    },
-    {
-      "productId": 3,
-      "quantity": 1
-    }
-  ]
-}
+Buat folder `Models` dan buat file-file berikut:
+
+#### 3.1 User Model (`Models/User.cs`)
+#### 3.2 Category Model (`Models/Category.cs`)
+#### 3.3 Product Model (`Models/Product.cs`)
+#### 3.4 Order Model (`Models/Order.cs`)
+#### 3.5 OrderItem Model (`Models/OrderItem.cs`)
+#### 3.6 Riwayat Model (`Models/Riwayat.cs`)
+
+### Langkah 4: Membuat Database Context
+
+Buat folder `Data` dan buat `ApplicationDbContext.cs`
+
+### Langkah 5: Membuat DTOs
+
+Buat folder `DTOs` dan buat file-file DTO untuk request/response
+
+### Langkah 6: Membuat Services
+
+Buat folder `Services` dan implementasikan business logic
+
+### Langkah 7: Membuat Custom Authorization
+
+Buat folder `Attributes` dan buat `AuthorizeAttribute.cs`
+
+### Langkah 8: Membuat Controllers
+
+Buat folder `Controllers` dan implementasikan API endpoints
+
+### Langkah 9: Konfigurasi Program.cs
+
+Update Program.cs dengan JWT authentication dan Swagger
+
+### Langkah 10: Konfigurasi Database
+
+Update `appsettings.json` dengan connection string dan JWT settings
+
+## 🔐 Cara Menggunakan JWT Authentication
+
+### 1. Register User Baru
+### 2. Login dan Dapatkan Token
+### 3. Gunakan Token untuk Akses Endpoint Protected
+
+## 📚 API Endpoints
+
+### Public Endpoints (Tidak Perlu Token)
+- User registration dan login
+- Get categories dan products
+- Get user information
+
+### Protected Endpoints (Perlu Token)
+- User management (update, delete)
+- Order management
+- Activity history
+
+## 🧪 Testing dengan Swagger
+
+1. Buka browser dan kunjungi: `http://localhost:5158`
+2. Swagger UI akan menampilkan semua endpoint yang tersedia
+3. Test endpoint secara interaktif
+
+## 🔧 Troubleshooting
+
+### Error: "Could not copy file because it is being used by another process"
+- Stop aplikasi yang sedang berjalan dengan `Ctrl+C`
+- Atau gunakan `taskkill /F /IM MyApiApp.exe`
+
+### Error: "Email already registered"
+- Gunakan email yang berbeda untuk registrasi
+
+### Error: "Invalid token"
+- Pastikan token JWT valid dan belum expired
+- Pastikan format header: `Authorization: Bearer {token}`
+
+## 📁 Struktur Folder
+
+```
+MyApiApp/
+├── Controllers/           # API Controllers
+├── Data/                 # Database Context
+├── DTOs/                 # Data Transfer Objects
+├── Models/               # Entity Models
+├── Services/             # Business Logic Services
+├── Attributes/           # Custom Attributes
+├── Properties/           # Launch Settings
+├── appsettings.json      # Configuration
+├── Program.cs            # Application Entry Point
+├── MyApiApp.csproj      # Project File
+└── README.md            # This File
 ```
 
-**Response:**
-```json
-{
-  "id": 1,
-  "orderNumber": "ORD-20240101-ABC12345",
-  "userId": 1,
-  "userName": "John Doe",
-  "shippingAddress": "Jl. Pengiriman No. 456",
-  "phone": "081234567890",
-  "totalAmount": 150000.00,
-  "status": "Pending",
-  "notes": "Tolong dibungkus rapi",
-  "orderDate": "2024-01-01T00:00:00Z",
-  "orderItems": [
-    {
-      "id": 1,
-      "productId": 1,
-      "productName": "Produk A",
-      "quantity": 2,
-      "unitPrice": 50000.00,
-      "totalPrice": 100000.00
-    }
-  ]
-}
+## 🚀 Deployment
+
+### Development
+```bash
+dotnet run
 ```
 
-## Status Order
+### Production
+```bash
+dotnet publish -c Release
+dotnet bin/Release/net9.0/publish/MyApiApp.dll
+```
 
-- `Pending` - Order baru dibuat
-- `Confirmed` - Order dikonfirmasi
-- `Processing` - Order sedang diproses
-- `Shipped` - Order sudah dikirim
-- `Delivered` - Order sudah diterima
-- `Cancelled` - Order dibatalkan
+## 🔒 Security Considerations
 
-## Tipe Aktivitas
+1. **JWT Secret Key**: Gunakan secret key yang kuat dan aman
+2. **Password Hashing**: Password di-hash menggunakan SHA256
+3. **Token Expiration**: Token JWT memiliki masa berlaku (default: 60 menit)
+4. **Input Validation**: Semua input divalidasi menggunakan Data Annotations
+5. **SQL Injection Protection**: Menggunakan Entity Framework Core yang aman
 
-- `Login` - User login
-- `Logout` - User logout
-- `OrderCreated` - Order dibuat
-- `OrderUpdated` - Order diupdate
-- `OrderCancelled` - Order dibatalkan
-- `ProfileUpdated` - Profil diupdate
-- `PasswordChanged` - Password diubah
+## 🔮 Future Enhancements
 
-## Keamanan
+1. **Role-based Authorization**: Admin, User, Moderator roles
+2. **Refresh Token**: Implementasi refresh token untuk security yang lebih baik
+3. **Email Verification**: Verifikasi email saat registrasi
+4. **Password Reset**: Fitur reset password
+5. **File Upload**: Upload gambar produk
+6. **Payment Integration**: Integrasi payment gateway
+7. **Real-time Notifications**: WebSocket untuk notifikasi real-time
+8. **Caching**: Redis caching untuk performance
+9. **Logging**: Structured logging dengan Serilog
+10. **Unit Testing**: Unit tests untuk semua services dan controllers
 
-- Password di-hash menggunakan SHA256
-- Validasi input menggunakan Data Annotations
-- Soft delete untuk data sensitif
-- CORS policy untuk keamanan
+## 📞 Support
 
-## Pengembangan Selanjutnya
+Jika ada pertanyaan atau masalah, silakan buat issue di repository atau hubungi developer.
 
-- Implementasi JWT Authentication
-- Role-based Authorization
-- Payment Gateway Integration
-- Email Notifications
-- File Upload untuk Product Images
-- Pagination untuk list data
-- Advanced Search dan Filtering
-- API Rate Limiting
+---
 
-## Kontribusi
-
-Silakan buat pull request untuk kontribusi atau laporkan bug melalui issues.
-
-## Lisensi
-
-Proyek ini menggunakan lisensi MIT.
+**Happy Coding! 🎉**
